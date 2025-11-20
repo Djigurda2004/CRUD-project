@@ -1,0 +1,4 @@
+venv
+dj/__pycache__
+main/__pycache__
+newapp/__pycache__
