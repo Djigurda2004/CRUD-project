@@ -1,0 +1,30 @@
+{%load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="windows-1051">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock %} </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "main/css/main.css" %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">  
+</head>
+<body>
+    <aside>
+        <img src="{% static "main/img/image2.png" %}" alt="Image">
+        <span class="logo">Visual Studio</span>
+        <h3>Navigation</h3>
+        <ul>
+            <a href="{%url 'home'%}"><li><i class="fa-solid fa-house"></i>Main</li></a>
+            <a href="{%url 'about'%}"><li><i class="fa-solid fa-address-card"></i>About us</li></a>
+            <a href="{%url 'newapp_home'%}"><li><i class="fa-solid fa-clone"></i>New Apps</li></a>
+            <a href=""><li><i class="fa-brands fa-telegram"></i>Contacts</li></a>
+            <a href="{%url 'addapp'%}"><li><button class="btn btn-info"><i class="fas fa-plus-circle">Add a new app</i></button></li></a>
+        </ul>
+    </aside>
+    <main>
+        {%block content%}
+        {%endblock%}
+    </main>
+</body>
+</html>

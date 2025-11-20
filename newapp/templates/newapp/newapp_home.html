@@ -1,0 +1,20 @@
+{% extends 'main/more.html' %}
+{% block content %}
+    <div class="features">
+        <h1>New Apps</h1>
+        {%if newapp%}
+        {%for na in newapp%}
+            <div class="alert alert-warning">
+                <h3>{{na.title}}</h3>
+                <p>{{na.anons}}</p>
+                <a href="{%url 'newapp-detail' na.id%}" class="btn btn-warning">More...</a>
+            </div>
+        {%endfor%}
+        {%else%}
+            <p>There are no new apps</p>
+        {%endif%}
+    </div>
+{% endblock %}
+{%block title%}
+New Apps
+{%endblock%}
