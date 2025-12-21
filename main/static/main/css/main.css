@@ -4,7 +4,7 @@ body {
 
 aside {
     float: left;
-    background: whitesmoke;
+    background: white;
     width: 20%;
     padding: 2.5%;
     height: 100vh;
@@ -12,18 +12,6 @@ aside {
     border-right: 5px solid black;
 }
 
-aside img {
-    width: 80px;
-    float:left;
-}
-
-aside .logo {
-    font-size: 30px;
-    margin-left: 10px;
-    font-weight: 700;
-    position: relative;
-    top: 17px
-}
 
 aside h3 {
     margin-top: 50px;
@@ -47,7 +35,7 @@ aside ul a{
 }
 
 aside ul li:hover, aside ul a:hover{
-    color:#8e59cb;
+    color:#b8b8b8;
     transform: scale(1.05);
 }
 main .features {
@@ -79,13 +67,13 @@ main .features p {
 }
 
 .btn-info {
-    background-color: #8e59cb;
-    border-color:#8e59cb; 
+    background-color: #b8b8b8;
+    border-color:#b8b8b8; 
 }
 
 .btn-info:hover{
-    background-color:#8e59cb;
-    border-color:#8e59cb; 
+    background-color:#b8b8b8;
+    border-color:#b8b8b8; 
 }
 
 form {

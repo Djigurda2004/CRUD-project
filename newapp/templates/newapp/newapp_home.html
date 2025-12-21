@@ -1,7 +1,7 @@
 {% extends 'main/more.html' %}
 {% block content %}
     <div class="features">
-        <h1>New Apps</h1>
+        <h1>New articles</h1>
         {%if newapp%}
         {%for na in newapp%}
             <div class="alert alert-warning">
@@ -11,10 +11,10 @@
             </div>
         {%endfor%}
         {%else%}
-            <p>There are no new apps</p>
+            <p>There are no new articles</p>
         {%endif%}
     </div>
 {% endblock %}
 {%block title%}
-New Apps
+New articles
 {%endblock%}

@@ -4,8 +4,8 @@
         <h1>{{article.title}}</h1>
         <p>Date of publication: {{article.date}}</p>
         <p>{{article.full_text}}</p>
-        <a href="{%url 'newapp-update' article.id%}" class="btn btn-info">Update app</a>
-        <a href="{%url 'newapp-delete' article.id%}" class="btn btn-danger">Delete app</a>
+        <a href="{%url 'newapp-update' article.id%}" class="btn btn-info">Update article</a>
+        <a href="{%url 'newapp-delete' article.id%}" class="btn btn-danger">Delete article</a>
     </div>
 {% endblock %}
 {%block title%}

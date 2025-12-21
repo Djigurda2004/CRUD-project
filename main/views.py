@@ -2,11 +2,9 @@ from django.shortcuts import render
 
 def index(request):
     data={'title':'Main Page',
-          'values':['Some text','Hello','123'],
+          'values':['Some text','H'],
           'obj' : {
-              'car': 'Mercedes CLS 63',
-              'acs': 'Mag Shar#2',
-              'house': 'House 1488'
+              "data":403
           }         
     }
     return render(request, "main/index.html",data)
