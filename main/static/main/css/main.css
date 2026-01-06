@@ -81,3 +81,8 @@ form {
     width: 500px;
     margin-top: 50px;
 }
+
+.navbar-nav .ms-auto {
+    list-style: none;
+    text-decoration: none;
+}

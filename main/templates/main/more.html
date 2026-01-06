@@ -11,13 +11,33 @@
 </head>
 <body>
     <aside>
+        <ul class="navbar-nav ms-auto">
+        {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <span class="nav-link">{{ request.user.username }}</span>
+            </li>
+            <li class="nav-item">
+                <form method="post" action="{% url 'users:logout' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-link nav-link">Logout</button>
+                </form>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:login' %}"><button class="btn btn-link nav-link">Login</button></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:register' %}"><button class="btn btn-link nav-link">Register</button></a>
+            </li>
+        {% endif %}
+        </ul>
         <h3>Navigation</h3>
         <ul>
             <a href="{%url 'home'%}"><li><i class="fa-solid fa-house"></i>Main</li></a>
             <a href="{%url 'about'%}"><li><i class="fa-solid fa-address-card"></i>About us</li></a>
-            <a href="{%url 'newapp_home'%}"><li><i class="fa-solid fa-clone"></i>New articles</li></a>
+            <a href="{%url 'arts'%}"><li><i class="fa-solid fa-clone"></i>Articles</li></a>
             <a href=""><li><i class="fa-brands fa-telegram"></i>Contacts</li></a>
-            <a href="{%url 'addapp'%}"><li><button class="btn btn-info"><i class="fas fa-plus-circle">Add a new article</i></button></li></a>
+            <a href="{%url 'add-art'%}"><li><button class="btn btn-info"><i class="fas fa-plus-circle">Add a new article</i></button></li></a>
         </ul>
     </aside>
     <main>

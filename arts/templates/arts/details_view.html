@@ -1,0 +1,16 @@
+{% extends 'main/more.html' %}
+{% block content %}
+    <div class="features">
+        <h1>{{article.title}}</h1>
+        <p>Date of publication: {{article.date}}</p>
+        <p>Author: {{article.author}}</p>
+        <p>{{article.full_text}}</p>
+        {% if user.is_authenticated and article.author == user %}
+            <a href="{%url 'art-update' article.id%}" class="btn btn-info">Update article</a>
+            <a href="{%url 'art-delete' article.id%}" class="btn btn-danger">Delete article</a>
+        {% endif %}
+    </div>
+{% endblock %}
+{%block title%}
+{{article.title}}
+{%endblock%}

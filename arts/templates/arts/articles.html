@@ -1,0 +1,20 @@
+{% extends 'main/more.html' %}
+{% block content %}
+    <div class="features">
+        <h1>Articles</h1>
+        {%if arts%}
+        {%for art in arts%}
+            <div class="alert alert-warning">
+                <h3>{{art.title}}</h3>
+                <p>{{art.anons}}</p>
+                <a href="{%url 'art-detail' art.id%}" class="btn btn-warning">More...</a>
+            </div>
+        {%endfor%}
+        {%else%}
+            <p>There are no articles</p>
+        {%endif%}
+    </div>
+{% endblock %}
+{%block title%}
+Articles
+{%endblock%}
