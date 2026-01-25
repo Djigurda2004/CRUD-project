@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'users',
     'arts',
     'main',
+    'comments',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,3 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = "users:login"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "users:login"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

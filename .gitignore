@@ -1,4 +1,7 @@
 venv
+media
 /dj/__pycache__
 /main/__pycache__
 /newapp/__pycache__
+/users/__pycache__
+/comments/__pycache__

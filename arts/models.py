@@ -6,11 +6,9 @@ class Articles(models.Model):
     anons = models.CharField('Anons',max_length=250)
     full_text= models.TextField('Article')
     date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="articles",
-    )
+    author = models.ForeignKey(User,on_delete=models.CASCADE,related_name="articles",)
+    likes = models.ManyToManyField(User, related_name="liked_articles", blank=True)
+    views = models.IntegerField(default=0)
 
     def __str__(self):
         return f'Article: {self.title}'
@@ -21,3 +19,9 @@ class Articles(models.Model):
     class Meta:
         verbose_name = 'Article'
         verbose_name_plural = 'Articles'
+
+    def total_likes(self):
+        return self.likes.count()
+    
+    def total_comments(self):
+        return self.comments.count()

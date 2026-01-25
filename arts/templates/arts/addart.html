@@ -2,7 +2,7 @@
 {% block content %}
     <div class="features">
         <h1>Form for adding article</h1>
-        <form method="post">
+        <form method="post" class="create-form">
             {% csrf_token %}
             {{form.title}}<br>
             {{form.anons}}<br>

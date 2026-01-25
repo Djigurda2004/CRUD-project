@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Following</title>
 </head>
 <body>
-    <h1>Our contacts</h1>
+    {%for follow in following%}
+        <div>
+            <p>{{follow}}</p>
+        </div>
+    {%empty%}
+        <h1>You have not following</h1>
+    {%endfor%}
 </body>
 </html>

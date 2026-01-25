@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Liked</title>
 </head>
 <body>
-    <h1>Our contacts</h1>
+    {%for article in articles%}
+        <div>
+            <p>{{article.title}}</p> 
+        </div>
+    {%empty%}
+        <h1>You have not liked articles</h1>
+    {%endfor%}
 </body>
 </html>
