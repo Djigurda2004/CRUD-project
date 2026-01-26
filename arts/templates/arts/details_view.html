@@ -1,79 +1,63 @@
 {% extends 'main/more.html' %}
-{%load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'arts/css/details_view.css' %}">
-</head>
-<body>
-    {% block content %}
-        <div class="features">
-            <h1>{{article.title}}</h1>
-            <p>Date of publication: {{article.date}}</p>
-            <p>Author: <a href="{%url 'users:profile' article.author.username %}">{{article.author.username}}</a></p>
-            <p>{{article.views}} views</p>
-            <p>{{article.total_likes}}</p>
-            <p>{{article.full_text}} likes</p>
-            {% if user.is_authenticated %}
-                <h5>Leave a comment:</h5>
-                <form action="{% url 'comments:add' article.id %}" method="post">
-                    {% csrf_token %}
-                    <textarea name="text" class="comment-form" placeholder="Write a comment..." required></textarea>
-                    <button type="submit" class="btn btn-success mt-2">Send</button>
-                </form>
-            {% endif %}
-            <h3>Comments ({{ article.total_comments }}):</h3>
-            <div class="comments-section text-start">
-                {% for comment in comments %}
-                    <div class="alert alert-light border shadow-sm mb-3">
-                        <strong>{{ comment.author.username }}</strong> 
-                        <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
-                        <p>{{ comment.text }}</p>
-                        <div class="d-flex gap-2">
-                            <form action="{% url 'comments:like' comment.id %}" method="post">
-                                {% csrf_token %}
-                                <button class="btn btn-sm btn-outline-primary">Like {{ comment.likes.count }}</button>
-                            </form>
-                            {% if user.is_authenticated %}
-                                <button class="btn btn-sm btn-outline-secondary" onclick="showReplyForm({{ comment.id }})">Reply</button>
-                            {% endif %}
-                            {% if comment.author == request.user %}
-                                <a href="{% url 'comments:delete' comment.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                            {% endif %}
-                        </div>
-                        <div id="reply-form-{{ comment.id }}" class="mt-3 d-none">
-                            <form action="{% url 'comments:add' article.id %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="parrent" value="{{ comment.id }}">
-                                <textarea name="text" class="form-control mb-2" rows="2" required></textarea>
-                                <button type="submit" class="btn btn-sm btn-primary">Submit Reply</button>
-                            </form>
-                        </div>
-                        {% if comment.replies.all %}
-                            <div class="ms-5 mt-3">
-                                {% for reply in comment.replies.all %}
-                                    <div class="alert alert-secondary py-2 mb-2">
-                                        <strong>{{ reply.author.username }}</strong>
-                                        <p class="mb-1">{{ reply.text }}</p>
-                                        <small class="text-muted">{{ reply.created_at}}</small>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                {% empty %}
-                    <p>No comments yet</p>
-                {% endfor %}
-            </div>
-        </div>
-        <script>
-            function showReplyForm(commentId) {
-                const form = document.getElementById('reply-form-' + commentId);
-                form.classList.toggle('d-none');
+{% load mptt_tags %}
+{% block content %}
+<script src="https://unpkg.com/htmx.org@1.9.6"></script>
+<script>
+    function toggleElement(id, forceShow = false) {
+        var x = document.getElementById(id);
+        if (x) {
+            if (forceShow) {
+                x.style.display = "block";
+            } else {
+                x.style.display = (x.style.display === "none") ? "block" : "none";
             }
-        </script>
-    {% endblock %}
-</body>
-</html>
+        }
+    }
+</script>
+<div class="features">
+    <h1>{{article.title}}</h1>
+    <p>Date of publication: {{article.date}}</p>
+    <p>Author: <a href="{%url 'users:profile' article.author.username %}">{{article.author.username}}</a></p>
+    <p>{{article.full_text}}</p>
+    <div class="mb-4">
+        {% if article.author == request.user %}
+            <a href="{%url 'arts:update' article.id%}" class="btn btn-info">Update article</a>
+            <a href="{%url 'arts:delete' article.id%}" class="btn btn-danger">Delete article</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'arts:like' article.id %}" method="post" class="d-inline-block">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Like {{ article.total_likes }}</button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="comments-section mt-5" style="max-width: 800px;">
+        <h3>Comments</h3>
+        {% if user.is_authenticated %}
+            <div class="mb-4">
+                <button class="btn btn-outline-dark mb-2" onclick="toggleElement('main-comment-form')">Add a comment</button>
+                <div id="main-comment-form" style="display: none;">
+                    <form hx-post="{% url 'comments:add' article.id %}" 
+                          hx-target="#root-comments-container" 
+                          hx-swap="afterbegin"
+                          onsubmit="setTimeout(() => { this.reset(); toggleElement('main-comment-form'); }, 100);">
+                        {% csrf_token %}
+                        <textarea name="text" class="form-control mb-2" rows="3" placeholder="Share your thoughts..." required></textarea>
+                        <button type="submit" class="btn btn-success">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p><a href="{% url 'users:login' %}">Log in</a> to leave a comment.</p>
+        {% endif %}
+        <div id="root-comments-container">
+            {% for comment in article.comments.all %}
+                {% if comment.is_root_node %}
+                    {% include "comments/comments.html" with node=comment %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block title %}{{article.title}}{% endblock %}

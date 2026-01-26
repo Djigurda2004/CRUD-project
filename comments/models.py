@@ -7,7 +7,7 @@ class Comment(MPTTModel):
     article = models.ForeignKey(Articles,on_delete=models.CASCADE,related_name='comments')
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     text = models.TextField()
-    parrent = TreeForeignKey("self",on_delete=models.CASCADE,related_name='replies',blank=True,null=True)
+    parent = TreeForeignKey("self",on_delete=models.CASCADE,related_name='replies',blank=True,null=True)
     likes = models.ManyToManyField(User,related_name='liked_comments',blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

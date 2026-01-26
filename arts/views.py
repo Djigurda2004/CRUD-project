@@ -32,7 +32,7 @@ class ArtDetailView(DetailView):
         return article
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['comments'] = self.object.comments.filter(parrent=None).order_by('-created_at')
+        context['comments'] = self.object.comments.filter(parent=None).order_by('-created_at')
         return context
 
 

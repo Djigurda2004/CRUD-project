@@ -9,9 +9,11 @@ def add_comment(request,article_id):
     article = get_object_or_404(Articles,id=article_id)
     if request.method == "POST":
         text = request.POST.get("text")
-        parrent_id = request.POST.get("parrent")
-        parrent = Comment.objects.get(id=parrent_id) if parrent_id else None
-        Comment.objects.create(article=article,author=request.user,text=text,parrent=parrent)
+        parent_id = request.POST.get("parent")
+        parent = Comment.objects.get(id=parent_id) if parent_id else None
+        comment = Comment.objects.create(article=article,author=request.user,text=text,parent=parent)
+        if request.headers.get('HX-Request'):
+            return render(request, 'comments/comments.html', {'node': comment})
     return redirect('arts:detail',article.id)
 
 @login_required

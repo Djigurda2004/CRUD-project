@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'arts',
     'main',
     'comments',
+    'mptt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
